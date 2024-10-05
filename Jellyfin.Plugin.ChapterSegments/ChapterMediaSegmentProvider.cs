@@ -28,7 +28,7 @@ public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMedi
 
         foreach (var item in mappings!.Where(e => !string.IsNullOrWhiteSpace(e.Regex)))
         {
-            if (new Regex(item.Regex, RegexOptions.IgnoreCase | RegexOptions.Singleline).IsMatch(name))
+            if (Regex.IsMatch(name, item.Regex, RegexOptions.IgnoreCase | RegexOptions.Singleline))
             {
                 return item.Type;
             }
