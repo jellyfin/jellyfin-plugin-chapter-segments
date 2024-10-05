@@ -38,15 +38,12 @@ public class ChapterSegmentsPlugin : BasePlugin<PluginConfiguration>, IHasWebPag
     public override string Name => "Chapter Segments Provider";
 
     /// <inheritdoc />
-    public IEnumerable<PluginPageInfo> GetPages()
-    {
-        return new[]
+    public IEnumerable<PluginPageInfo> GetPages() =>
+    [
+        new()
         {
-            new PluginPageInfo
-            {
-                Name = Name,
-                EmbeddedResourcePath = $"{GetType().Namespace}.Configuration.config.html"
-            }
-        };
-    }
+            Name = Name,
+            EmbeddedResourcePath = $"{GetType().Namespace}.Configuration.config.html"
+        }
+    ];
 }

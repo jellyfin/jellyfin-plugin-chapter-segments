@@ -23,14 +23,14 @@ public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMedi
 
     private MediaSegmentType? GetMediaSegmentType(string name)
     {
-        // TODO This should support all the types
+        // TODO This should support all the types and cache the regex instances
         var introPattern = ChapterSegmentsPlugin.Instance?.Configuration.IntroPattern;
         if (introPattern == null)
         {
             return null;
         }
 
-        var introRegex = new Regex(introPattern);
+        var introRegex = new Regex(introPattern, RegexOptions.IgnoreCase);
         return introRegex.IsMatch(name) ? MediaSegmentType.Intro : null;
     }
 
