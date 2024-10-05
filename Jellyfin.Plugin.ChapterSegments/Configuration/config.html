@@ -14,7 +14,19 @@
                     </div>
                     <div class="verticalSection">
                         <div class="inputContainer">
-                            <input is="emby-input" type="text" id="IntroPattern" label="RegEx pattern for intros" />
+                            <input is="emby-input" type="text" id="CustomMappingIntro" label="RegEx pattern for intros" />
+                        </div>
+                        <div class="inputContainer">
+                            <input is="emby-input" type="text" id="CustomMappingPreview" label="RegEx pattern for previews" />
+                        </div>
+                        <div class="inputContainer">
+                            <input is="emby-input" type="text" id="CustomMappingRecap" label="RegEx pattern for recaps" />
+                        </div>
+                        <div class="inputContainer">
+                            <input is="emby-input" type="text" id="CustomMappingCommercial" label="RegEx pattern for commercials" />
+                        </div>
+                        <div class="inputContainer">
+                            <input is="emby-input" type="text" id="CustomMappingOutro" label="RegEx pattern for outros" />
                         </div>
                     </div>
                     <div>
@@ -35,7 +47,11 @@
         var PluginConfigurationPage = {
             pluginUniqueId: "698b6f33-14ca-49b5-9d79-fc3c0ab941f5",
 
-            IntroPattern: document.querySelector("#IntroPattern"),
+            CustomMappingIntro: document.querySelector("#CustomMappingIntro"),
+            CustomMappingPreview: document.querySelector("#CustomMappingPreview"),
+            CustomMappingRecap: document.querySelector("#CustomMappingRecap"),
+            CustomMappingOutro: document.querySelector("#CustomMappingOutro"),
+            CustomMappingCommercial: document.querySelector("#CustomMappingCommercial"),
         };
 
         document.querySelector('.esqConfigurationPage').addEventListener("pageshow", function () {
@@ -45,7 +61,11 @@
             Dashboard.showLoadingMsg();
 
             window.ApiClient.getPluginConfiguration(PluginConfigurationPage.pluginUniqueId).then(function (config) {
-                PluginConfigurationPage.IntroPattern.value = config.IntroPattern || '';
+                PluginConfigurationPage.CustomMappingIntro.value = config.CustomMappingIntro || '';
+                PluginConfigurationPage.CustomMappingPreview.value = config.CustomMappingPreview || '';
+                PluginConfigurationPage.CustomMappingRecap.value = config.CustomMappingRecap || '';
+                PluginConfigurationPage.CustomMappingOutro.value = config.CustomMappingOutro || '';
+                PluginConfigurationPage.CustomMappingCommercial.value = config.CustomMappingCommercial || '';
 
                 Dashboard.hideLoadingMsg();
             });
@@ -57,7 +77,11 @@
             Dashboard.showLoadingMsg();
 
             window.ApiClient.getPluginConfiguration(PluginConfigurationPage.pluginUniqueId).then(function (config) {
-                config.IntroPattern = PluginConfigurationPage.IntroPattern.value || null;
+                config.CustomMappingIntro = PluginConfigurationPage.CustomMappingIntro.value || null;
+                config.CustomMappingPreview = PluginConfigurationPage.CustomMappingPreview.value || null;
+                config.CustomMappingRecap = PluginConfigurationPage.CustomMappingRecap.value || null;
+                config.CustomMappingOutro = PluginConfigurationPage.CustomMappingOutro.value || null;
+                config.CustomMappingCommercial = PluginConfigurationPage.CustomMappingCommercial.value || null;
 
                 window.ApiClient.updatePluginConfiguration(PluginConfigurationPage.pluginUniqueId, config).then(Dashboard.processPluginConfigurationUpdateResult);
             });
