@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Chapter Segments Provider</title>
+</head>
+<body>
+<div data-role="page" class="page type-interior pluginConfigurationPage esqConfigurationPage">
+    <div data-role="content">
+        <div class="content-primary">
+            <form class="esqConfigurationForm">
+                <div class="verticalSection verticalSection-extrabottompadding">
+                    <div class="sectionTitleContainer flex align-items-center">
+                        <h2 class="sectionTitle">Chapter Segments Provider Settings:</h2>
+                    </div>
+                    <div class="verticalSection">
+                        <div class="inputContainer">
+                            <input is="emby-input" type="text" id="IntroPattern" label="RegEx pattern for intros" />
+                        </div>
+                    </div>
+                    <div>
+                        <button is="emby-button" type="submit" data-theme="b" class="raised button-submit block">
+                            <span>${Save}</span>
+                        </button>
+                        <button is="emby-button" type="button" class="raised button-cancel block btnCancel" onclick="history.back();">
+                            <span>${ButtonCancel}</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        var PluginConfigurationPage = {
+            pluginUniqueId: "698b6f33-14ca-49b5-9d79-fc3c0ab941f5",
+
+            IntroPattern: document.querySelector("#IntroPattern"),
+        };
+
+        document.querySelector('.esqConfigurationPage').addEventListener("pageshow", function () {
+            // start with all groups expanded
+            document.querySelectorAll("button#expandButton").forEach(button => button.click());
+
+            Dashboard.showLoadingMsg();
+
+            window.ApiClient.getPluginConfiguration(PluginConfigurationPage.pluginUniqueId).then(function (config) {
+                PluginConfigurationPage.IntroPattern.value = config.IntroPattern || '';
+
+                Dashboard.hideLoadingMsg();
+            });
+        });
+
+        var form = document.querySelector(".esqConfigurationForm");
+        form.addEventListener("submit", function(e){
+            e.preventDefault();
+            Dashboard.showLoadingMsg();
+
+            window.ApiClient.getPluginConfiguration(PluginConfigurationPage.pluginUniqueId).then(function (config) {
+                config.IntroPattern = PluginConfigurationPage.IntroPattern.value || null;
+
+                window.ApiClient.updatePluginConfiguration(PluginConfigurationPage.pluginUniqueId, config).then(Dashboard.processPluginConfigurationUpdateResult);
+            });
+
+            // Disable default form submission
+            return false;
+        });
+    </script>
+</div>
+</body>
+</html>
