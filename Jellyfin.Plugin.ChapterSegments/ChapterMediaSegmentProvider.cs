@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,15 +24,17 @@ public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMedi
 
     private MediaSegmentType? GetMediaSegmentType(string name)
     {
-        // TODO This should support all the types and cache the regex instances
-        var introPattern = ChapterSegmentsPlugin.Instance?.Configuration.IntroPattern;
-        if (introPattern == null)
+        var mappings = ChapterSegmentsPlugin.Instance?.Configuration.Patterns();
+
+        foreach (var item in mappings!.Where(e => !string.IsNullOrWhiteSpace(e.Regex)))
         {
-            return null;
+            if (Regex.IsMatch(name, item.Regex, RegexOptions.IgnoreCase | RegexOptions.Singleline))
+            {
+                return item.Type;
+            }
         }
 
-        var introRegex = new Regex(introPattern, RegexOptions.IgnoreCase);
-        return introRegex.IsMatch(name) ? MediaSegmentType.Intro : null;
+        return null;
     }
 
     /// <inheritdoc />
