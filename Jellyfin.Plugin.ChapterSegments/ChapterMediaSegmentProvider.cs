@@ -44,10 +44,16 @@ public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMedi
         var item = itemRepository.RetrieveItem(request.ItemId);
         if (item is not IHasMediaSources mediaItem)
         {
-            return Task.FromResult<IReadOnlyList<MediaSegmentDto>>(new List<MediaSegmentDto>());
+            return Task.FromResult<IReadOnlyList<MediaSegmentDto>>(Array.Empty<MediaSegmentDto>());
         }
 
         var chapters = itemRepository.GetChapters(item);
+        if (chapters.Count == 0)
+        {
+            // No chapters, so nothing to parse.
+            return Task.FromResult<IReadOnlyList<MediaSegmentDto>>(Array.Empty<MediaSegmentDto>());
+        }
+
         var segments = new List<MediaSegmentDto>(chapters.Count);
 
         for (var index = 0; index < chapters.Count; index++)
@@ -55,7 +61,7 @@ public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMedi
             var chapterInfo = chapters[index];
             var nextChapterInfo = index + 1 < chapters.Count ? chapters[index + 1] : null;
 
-            if (chapterInfo.Name == null)
+            if (string.IsNullOrEmpty(chapterInfo.Name))
             {
                 continue;
             }
