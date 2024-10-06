@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Jellyfin.Data.Enums;
 using MediaBrowser.Model.Plugins;
 
 namespace Jellyfin.Plugin.ChapterSegments.Configuration;
@@ -17,7 +18,8 @@ public class PluginConfiguration : BasePluginConfiguration
     /// <summary>
     /// Gets or sets the user provided regex text for Commercials.
     /// </summary>
-    public string? CustomMappingPreview { get; set; } = "preview|next time on|next on|sneek peak";
+    public string? CustomMappingPreview { get; set; } = "preview|next time on|next on|sneak peek";
+
 
     /// <summary>
     /// Gets or sets the user provided regex text for Previews.
@@ -37,16 +39,16 @@ public class PluginConfiguration : BasePluginConfiguration
     /// <summary>
     /// Gets the regular expressions with a mapping of their respective Segment types.
     /// </summary>
-    public IReadOnlyList<(MediaSegmentType Type, string Regex)> Patterns()
+    /// <returns>A list of regexes with their respective segment types.</returns>
+    public IReadOnlyList<(MediaSegmentType Type, string? Regex)> Patterns()
     {
-        List<(MediaSegmentType Type, string Regex)> list = new List<(MediaSegmentType Type, string Regex)>()
-        {
-            { MediaSegmentType.Intro, CustomMappingIntro },
-            { MediaSegmentType.Commercial, CustomMappingCommercial },
-            { MediaSegmentType.Preview, CustomMappingPreview },
-            { MediaSegmentType.Recap, CustomMappingRecap },
-            { MediaSegmentType.Outro, CustomMappingOutro },
-        };
-        return list;
+        return
+        [
+            (MediaSegmentType.Intro, CustomMappingIntro),
+            (MediaSegmentType.Commercial, CustomMappingCommercial),
+            (MediaSegmentType.Preview, CustomMappingPreview),
+            (MediaSegmentType.Recap, CustomMappingRecap),
+            (MediaSegmentType.Outro, CustomMappingOutro),
+        ];
     }
 }
