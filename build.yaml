@@ -1,6 +1,6 @@
 name: "Chapter Segments Provider"
 guid: "698b6f33-14ca-49b5-9d79-fc3c0ab941f5"
-version: "3"
+version: "1.0.0"
 targetAbi: "10.10.0.0"
 framework: "net8.0"
 owner: "jellyfin"
@@ -12,3 +12,5 @@ category: "General"
 artifacts:
   - "Jellyfin.Plugin.ChapterSegments.dll"
 changelog: |-
+  - Merge Unstable into Master (#2) @crobibero
+  - Added additional defaults for chapter segment extraction (#1) @JPVenson
