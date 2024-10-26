@@ -20,7 +20,6 @@ public class PluginConfiguration : BasePluginConfiguration
     /// </summary>
     public string? CustomMappingPreview { get; set; } = "preview|next time on|next on|sneak peek";
 
-
     /// <summary>
     /// Gets or sets the user provided regex text for Previews.
     /// </summary>
