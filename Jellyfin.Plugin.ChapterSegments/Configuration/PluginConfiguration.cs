@@ -28,7 +28,7 @@ public class PluginConfiguration : BasePluginConfiguration
     /// <summary>
     /// Gets or sets the user provided regex text for Recaps.
     /// </summary>
-    public string? CustomMappingOutro { get; set; } = "outro|closing|ending|^ED$";
+    public string? CustomMappingOutro { get; set; } = "outro|closing|credits|ending|^ED$";
 
     /// <summary>
     /// Gets or sets the user provided regex text for Outros.
