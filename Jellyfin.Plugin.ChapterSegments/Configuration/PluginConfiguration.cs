@@ -33,7 +33,7 @@ public class PluginConfiguration : BasePluginConfiguration
     /// <summary>
     /// Gets or sets the user provided regex text for Outros.
     /// </summary>
-    public string? CustomMappingCommercial { get; set; } = "break|ad|advertisement|intermission";
+    public string? CustomMappingCommercial { get; set; } = "break|ad|advertisement|intermission|advert|commercial";
 
     /// <summary>
     /// Gets the regular expressions with a mapping of their respective Segment types.
