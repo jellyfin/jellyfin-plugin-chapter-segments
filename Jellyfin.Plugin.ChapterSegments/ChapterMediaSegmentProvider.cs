@@ -1,21 +1,35 @@
-﻿using System;
+﻿namespace Jellyfin.Plugin.ChapterSegments;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Jellyfin.Data.Enums;
-using MediaBrowser.Controller;
+using Jellyfin.Database.Implementations.Enums;
 using MediaBrowser.Controller.Entities;
+using MediaBrowser.Controller.MediaSegments;
 using MediaBrowser.Controller.Persistence;
 using MediaBrowser.Model;
 using MediaBrowser.Model.MediaSegments;
 
-namespace Jellyfin.Plugin.ChapterSegments;
-
 /// <inheritdoc />
-public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMediaSegmentProvider
+public class ChapterMediaSegmentProvider : IMediaSegmentProvider
 {
+    private readonly IItemRepository _itemRepository;
+    private readonly IChapterRepository _chapterRepository;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ChapterMediaSegmentProvider"/> class.
+    /// </summary>
+    /// <param name="itemRepository">The Item repository.</param>
+    /// <param name="chapterRepository">The chapter repository.</param>
+    public ChapterMediaSegmentProvider(IItemRepository itemRepository, IChapterRepository chapterRepository)
+    {
+        _itemRepository = itemRepository;
+        _chapterRepository = chapterRepository;
+    }
+
     /// <inheritdoc />
     public string Name => "Chapter Segments Provider";
 
@@ -41,13 +55,13 @@ public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMedi
     /// <inheritdoc />
     public Task<IReadOnlyList<MediaSegmentDto>> GetMediaSegments(MediaSegmentGenerationRequest request, CancellationToken cancellationToken)
     {
-        var item = itemRepository.RetrieveItem(request.ItemId);
+        var item = _itemRepository.RetrieveItem(request.ItemId);
         if (item is not IHasMediaSources mediaItem)
         {
             return Task.FromResult<IReadOnlyList<MediaSegmentDto>>(Array.Empty<MediaSegmentDto>());
         }
 
-        var chapters = itemRepository.GetChapters(item);
+        var chapters = _chapterRepository.GetChapters(item.Id);
         if (chapters.Count == 0)
         {
             // No chapters, so nothing to parse.
@@ -76,7 +90,7 @@ public class ChapterMediaSegmentProvider(IItemRepository itemRepository) : IMedi
                     ItemId = item.Id,
                     Type = type.Value,
                     StartTicks = chapterInfo.StartPositionTicks,
-                    EndTicks = nextChapterInfo?.StartPositionTicks ?? mediaItem.RunTimeTicks ?? chapterInfo.StartPositionTicks
+                    EndTicks = nextChapterInfo?.StartPositionTicks ?? mediaItem.RunTimeTicks ?? chapterInfo.StartPositionTicks,
                 });
             }
         }
