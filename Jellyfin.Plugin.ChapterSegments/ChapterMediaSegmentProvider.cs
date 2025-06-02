@@ -34,6 +34,9 @@ public class ChapterMediaSegmentProvider : IMediaSegmentProvider
     public string Name => "Chapter Segments Provider";
 
     /// <inheritdoc />
+    public ValueTask<bool> DeleteOnScan => new(true);
+
+    /// <inheritdoc />
     public ValueTask<bool> Supports(BaseItem item) => new(item is IHasMediaSources);
 
     private MediaSegmentType? GetMediaSegmentType(string name)
