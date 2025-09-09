@@ -16,22 +16,22 @@ public class PluginConfiguration : BasePluginConfiguration
     public string? CustomMappingIntro { get; set; } = "intro|opening|^OP$";
 
     /// <summary>
-    /// Gets or sets the user provided regex text for Commercials.
+    /// Gets or sets the user provided regex text for Previews.
     /// </summary>
     public string? CustomMappingPreview { get; set; } = "preview|next time on|next on|sneak peek";
 
     /// <summary>
-    /// Gets or sets the user provided regex text for Previews.
+    /// Gets or sets the user provided regex text for Recaps.
     /// </summary>
     public string? CustomMappingRecap { get; set; } = "recap|last time on|last on|previously on";
 
     /// <summary>
-    /// Gets or sets the user provided regex text for Recaps.
+    /// Gets or sets the user provided regex text for Outros.
     /// </summary>
     public string? CustomMappingOutro { get; set; } = "outro|closing|credits|ending|^ED$";
 
     /// <summary>
-    /// Gets or sets the user provided regex text for Outros.
+    /// Gets or sets the user provided regex text for Commercials.
     /// </summary>
     public string? CustomMappingCommercial { get; set; } = "break|ad|advertisement|intermission";
 
