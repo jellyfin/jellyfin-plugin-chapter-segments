@@ -80,6 +80,15 @@ public class ChapterMediaSegmentProvider : IMediaSegmentProvider
                 continue;
             }
 
+            var mediaSegmentStartTicks = chapterInfo.StartTicks;
+            var mediaSegmentEndTicks = nextChapterInfo?.StartPositionTicks ?? mediaItem.RunTimeTicks ?? chapterInfo.StartPositionTicks;
+
+            if (mediaSegmentEndTicks < mediaSegmentStartTicks)
+            {
+                // Chapter is invalid as the end position is before the starting position
+                continue;
+            }
+
             var type = GetMediaSegmentType(chapterInfo.Name);
 
             if (type.HasValue)
@@ -89,8 +98,8 @@ public class ChapterMediaSegmentProvider : IMediaSegmentProvider
                     Id = Guid.NewGuid(),
                     ItemId = item.Id,
                     Type = type.Value,
-                    StartTicks = chapterInfo.StartPositionTicks,
-                    EndTicks = nextChapterInfo?.StartPositionTicks ?? mediaItem.RunTimeTicks ?? chapterInfo.StartPositionTicks,
+                    StartTicks = mediaSegmentStartTicks,
+                    EndTicks = mediaSegmentEndTicks,
                 });
             }
         }
