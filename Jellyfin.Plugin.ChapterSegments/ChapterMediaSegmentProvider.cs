@@ -80,7 +80,7 @@ public class ChapterMediaSegmentProvider : IMediaSegmentProvider
                 continue;
             }
 
-            var mediaSegmentStartTicks = chapterInfo.StartTicks;
+            var mediaSegmentStartTicks = chapterInfo.StartPositionTicks;
             var mediaSegmentEndTicks = nextChapterInfo?.StartPositionTicks ?? mediaItem.RunTimeTicks ?? chapterInfo.StartPositionTicks;
 
             if (mediaSegmentEndTicks < mediaSegmentStartTicks)
