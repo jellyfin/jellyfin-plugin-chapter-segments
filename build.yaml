@@ -1,7 +1,7 @@
 name: "Chapter Segments Provider"
 guid: "698b6f33-14ca-49b5-9d79-fc3c0ab941f5"
-version: 4
-targetAbi: "10.11.0.0"
+version: 5
+targetAbi: "10.11.5.0"
 framework: "net9.0"
 owner: "jellyfin"
 overview: "Create media segments based on chapters."
@@ -11,8 +11,7 @@ description: >
 category: "General"
 artifacts:
   - "Jellyfin.Plugin.ChapterSegments.dll"
-changelog: |-
-  - Jellyfin 10.11 support (#9) @crobibero
-  - Added additional commercial terms (#8) @JPVenson
-  - Fix wrong order of RegEx comments (#13) @mihawk90
-  - Add "credits" to outro segment RegEx (#4) @mihawk90
+changelog: |2-
+
+  ### Dependency updates ###
+  - Update mcr.microsoft.com/devcontainers/dotnet Docker tag to v2 (#18) @[renovate[bot]](https://github.com/apps/renovate)
