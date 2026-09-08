@@ -53,6 +53,9 @@ public class ChapterMediaSegmentProvider : IMediaSegmentProvider
     }
 
     /// <inheritdoc />
+    public Task CleanupExtractedData(Guid itemId, CancellationToken cancellationToken) => Task.CompletedTask;
+
+    /// <inheritdoc />
     public Task<IReadOnlyList<MediaSegmentDto>> GetMediaSegments(MediaSegmentGenerationRequest request, CancellationToken cancellationToken)
     {
         var item = _itemRepository.RetrieveItem(request.ItemId);
