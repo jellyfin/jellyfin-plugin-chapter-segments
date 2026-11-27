@@ -14,27 +14,27 @@ public class PluginConfiguration : BasePluginConfiguration
     /// <summary>
     /// Gets or sets the user provided regex text for Intros.
     /// </summary>
-    public string? CustomMappingIntro { get; set; } = "intro|opening|^OP$";
+    public string? CustomMappingIntro { get; set; } = @"^(intro|opening( (credits|titles|theme|song))?|op|title sequence)( ?\d+)?$";
 
     /// <summary>
     /// Gets or sets the user provided regex text for Previews.
     /// </summary>
-    public string? CustomMappingPreview { get; set; } = "preview|next time on|next on|sneak peek";
+    public string? CustomMappingPreview { get; set; } = @"^((next (episode )?)?previews?|sneak peeks?|next time|next episode)( ?\d+)?$|^next (time )?on\b";
 
     /// <summary>
     /// Gets or sets the user provided regex text for Recaps.
     /// </summary>
-    public string? CustomMappingRecap { get; set; } = "recap|last time on|last on|previously on";
+    public string? CustomMappingRecap { get; set; } = @"^((the )?story so far|recaps?|previously|last time)( ?\d+)?$|^(previously|last( time)?) on\b";
 
     /// <summary>
     /// Gets or sets the user provided regex text for Outros.
     /// </summary>
-    public string? CustomMappingOutro { get; set; } = "outro|closing|credits|ending|^ED$";
+    public string? CustomMappingOutro { get; set; } = @"^(outro|ending( (credits|titles|theme|song))?|ed|(end|closing) (credits|titles)|credits|closing)( ?\d+)?$";
 
     /// <summary>
     /// Gets or sets the user provided regex text for Commercials.
     /// </summary>
-    public string? CustomMappingCommercial { get; set; } = "break|ad|advertisement|intermission|advert|commercial";
+    public string? CustomMappingCommercial { get; set; } = @"^(ads?|break|(ad|commercial) break|commercials?|advert(isement)?s?|intermission)( ?\d+)?$";
 
     /// <summary>
     /// Gets the regular expressions with a mapping of their respective Segment types.
